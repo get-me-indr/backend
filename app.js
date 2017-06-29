@@ -1,13 +1,23 @@
-var express = require('express');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var app = express();
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const { getPersonalizedEvents } = require('./data');
+
+const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.get('/', (req, res) => res.json({ hello: 'world' }));
+app.get('/', (req, res) => {
+  getPersonalizedEvents(req.query || {})
+    .then(events => {
+      return res.json({ events });
+    })
+    .catch(error => {
+      return res.json({ error });
+    });
+});
 
 
 module.exports = app;
