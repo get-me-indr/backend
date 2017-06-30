@@ -46,8 +46,8 @@ const insertUserInteraction = (userId, data) => {
 const getSavedUrsaEvents = tmUserId => new Promise((resolve, reject) => {
   const ref = db.ref(`${namespace}/ursa/${tmUserId}`);
   ref.on("value", function(snapshot) {
-    const val = snapshot.val();
-    const key = Object.keys(val)[0]
+    const val = snapshot.val() || {};
+    const key = val ? Object.keys(val)[0] : '';
     resolve(val[key]);
   }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);

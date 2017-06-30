@@ -31,7 +31,6 @@ require('isomorphic-fetch');
 
 module.exports = {
   getEvents: function(geoPoint, artists) {
-    console.log('artists', artists);
     let minReturnedObjects = 200;
     let radius = 50;
     let units= 'miles';

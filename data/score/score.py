@@ -1,5 +1,9 @@
+import json
 import sys
 
-print sys.argv[1]
+with open('data/score/events.json') as data_file:
+    data = json.load(data_file)
 
-sys.stdout.flush()
+
+    ret = data
+    sys.stdout.write(json.dumps(ret))

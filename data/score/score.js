@@ -1,12 +1,17 @@
 const { exec } = require('child_process');
+const fs = require('fs');
 
-module.exports = ({ events, facebookLikes }) => new Promise((resolve, reject) => {
-  const payload = JSON.stringify(Object.assign({ hello: "world" }, events, facebookLikes));
-  exec(`python ${__dirname}/score.py ${payload}`, (err, stdout, stderr) => {
-    if (err) {
-      reject(err);
-      return;
-    }
-    resolve(stdout);
+module.exports = ({ discoEvents, ursaEvents }) => new Promise((resolve, reject) => {
+  const json = JSON.stringify({ discoEvents, ursaEvents });
+  fs.writeFile(__dirname + '/events.json', json, () => {
+    exec(`python ${__dirname}/score.py`, (err, stdout, stderr) => {
+      if (err) {
+        console.log('err', err);
+        reject(err);
+        return;
+      }
+      console.log('stdout', stdout);
+      resolve(JSON.parse(stdout));
+    });
   });
-})
+});
