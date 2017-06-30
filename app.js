@@ -36,9 +36,9 @@ app.get('/discovery', (req, res) => {
 });
 
 app.post('/interactions', (req, res) => {
-  const { tmUserId, event, type } = req.body;
+  const { tmUserId, event, direction } = req.body;
   console.log({ userId, interaction });
-  firebase.insertUserInteraction(tmUserId, Object.assign({}, event, type))
+  firebase.insertUserInteraction(tmUserId, Object.assign({}, event, direction))
     .then(result => {
       console.log('interactions POST result', { result });
       res.json({ result });
