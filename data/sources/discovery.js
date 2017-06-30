@@ -16,6 +16,7 @@ require('isomorphic-fetch');
                          eventInfo.venueName = evt._embedded.venues[0].name;
                          eventInfo.venueCity = evt._embedded.venues[0].city.name;
                          eventInfo.venueState = evt._embedded.venues[0].state;
+                         eventInfo.artists = evt._embedded.attractions;
 
                          for(let img of evt.images){
                              if(img.ratio === '4_3'){
