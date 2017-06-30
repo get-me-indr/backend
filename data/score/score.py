@@ -45,7 +45,4 @@ with open('data/score/events.json') as data_file:
         else:
             finalOutputList.append(discovery_events[i]);
 
-
-
-
-sys.stdout.write(json.dumps(finalOutputList))
+    sys.stdout.write(json.dumps(finalOutputList))
