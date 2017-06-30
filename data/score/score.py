@@ -34,13 +34,13 @@ with open('data/score/events.json') as data_file:
 
 
     for i in range(0,5):
-        if len(ursa_events) > i and ursa_events[i]['eventId'] in overlaps:
+        if ursa_events[i]['eventId'] in overlaps:
             finalOutputList.insert(0,ursa_events[i])
         else:
             finalOutputList.append(ursa_events[i])
 
 
-        if len(discovery_events) > i and discovery_events[i]['eventId'] in overlaps:
+        if discovery_events[i]['eventId'] in overlaps:
             finalOutputList.insert(0,discovery_events[i])
         else:
             finalOutputList.append(discovery_events[i]);
