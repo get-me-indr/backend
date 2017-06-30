@@ -38,6 +38,7 @@ const getOngoingVerifiedFanOnsales = artistNames => new Promise((resolve, reject
 });
 
 const insertUserInteraction = (userId, data) => {
+  console.log({ userId, data});
   const ref = db.ref(`${namespace}/interactions/${userId}`);
   const key = ref.push().key;
   return ref.child(key).set(data);
