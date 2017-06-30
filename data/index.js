@@ -2,7 +2,8 @@ const {
   discovery,
   facebook,
   ursa,
-  oauth
+  oauth,
+  firebase
 } = require('./sources');
 
 module.exports.getPersonalizedEvents = ({
@@ -13,5 +14,6 @@ module.exports.getPersonalizedEvents = ({
 }) => new Promise((resolve, reject) => {
   // facebook.getMusic(fbUserId).then(console.log);
   // oauth.getTmMemberId(tmToken).then(tmMemberId => console.log({ tmMemberId }));
+  // firebase.getOngoingVerifiedFanOnsales()
   resolve([]);
 });
