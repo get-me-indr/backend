@@ -15,5 +15,9 @@ module.exports.getPersonalizedEvents = ({
   // facebook.getMusic(fbUserId).then(console.log);
   // oauth.getTmMemberId(tmToken).then(tmMemberId => console.log({ tmMemberId }));
   // firebase.getOngoingVerifiedFanOnsales()
-  resolve([]);
+  // score({}).then(response => console.log('response', response));
+  ursa.getRecommendations(tmUserId).then(events => {
+    resolve(events);
+  });
+
 });
