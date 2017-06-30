@@ -8,11 +8,11 @@ const {
 const score = require('./score/score.js');
 
 module.exports.getPersonalizedEvents = ({
-  tmToken = '7d394e869c2e9fb504ea2d8b216e99d409e147b4' /* gabo's tmToken */,
+  tmToken = 'ba6ef91537e06b3cac1c255635582f47ca251f06' /* gabo's tmToken */,
   tmUserId = '492196944',
   fbUserId = '10154599707336563' /* gabo's id */,
   location = '9q5cgpbtz',
-  fbUserToken = 'EAAZAyAs3RUfkBANgnaoWZB7cge5K5dkP9B98Hn4FlYsh2PIOoP6rmt3cqIjSSswXSBpmhIwnKwHU5GIP6AVNZCZAQZBilxArBXtPBs0xpfZAdlsazqfQFbpRaU9aEvqs5BODTrxmDGqS4VfZA84evAom3RTUpIniSQfWywDl0WcVmxHNhk8OZCErMb1TDf9FvNoZD'
+  fbUserToken = 'EAAZAyAs3RUfkBACXqE8EsdT2IpTwZBP5UdQWPpSZBuCLXMl5AYttGk5TUXWRxYdCseoJjrbuBZB92ZAnhEDIpLeZAkuNF3el0X6EYQMW2edUT1UfTvh4dR4OBeZCamdmHmTC3oPLbuF6oxvOP9VidRbtC1kneswZBboasgR9tTZCcAv0VJK7V9BUSKjMe8n6BSPEZD'
 }) => new Promise((resolve, reject) => {
   oauth.getTmMemberId(tmToken).then(tmMemberId => {
     facebook.getMusic(fbUserId, fbUserToken).then(artistNames => {
