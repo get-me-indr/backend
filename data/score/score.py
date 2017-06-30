@@ -28,21 +28,23 @@ with open('data/score/events.json') as data_file:
             overlaps.append(event['eventId'])
 
 
-    discovery_events.sort(key=lambda x: (x['distance']))
+    if len(discovery_events):
+        discovery_events.sort(key=lambda x: (x['distance']))
 
     finalOutputList = []
 
 
     for i in range(0,5):
-        if ursa_events[i]['eventId'] in overlaps:
-            finalOutputList.insert(0,ursa_events[i])
-        else:
-            finalOutputList.append(ursa_events[i])
+        if len(ursa_events) > i:
+            if ursa_events[i]['eventId'] in overlaps:
+                finalOutputList.insert(0,ursa_events[i])
+            else:
+                finalOutputList.append(ursa_events[i])
 
-
-        if discovery_events[i]['eventId'] in overlaps:
-            finalOutputList.insert(0,discovery_events[i])
-        else:
-            finalOutputList.append(discovery_events[i]);
+        if len(discovery_events):
+            if discovery_events[i]['eventId'] in overlaps:
+                finalOutputList.insert(0,discovery_events[i])
+            else:
+                finalOutputList.append(discovery_events[i]);
 
     sys.stdout.write(json.dumps(finalOutputList))
