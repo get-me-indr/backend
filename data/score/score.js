@@ -6,11 +6,9 @@ module.exports = ({ discoEvents, ursaEvents }) => new Promise((resolve, reject) 
   fs.writeFile(__dirname + '/events.json', json, () => {
     exec(`python ${__dirname}/score.py`, (err, stdout, stderr) => {
       if (err) {
-        console.log('err', err);
         reject(err);
         return;
       }
-      console.log('stdout', stdout);
       resolve(JSON.parse(stdout));
     });
   });
