@@ -12,10 +12,10 @@ module.exports.getPersonalizedEvents = ({
   tmUserId = '492196944',
   fbUserId = '10154599707336563' /* gabo's id */,
   location = '9q5cgpbtz',
-  fbUserToken = 'EAAZAyAs3RUfkBACXqE8EsdT2IpTwZBP5UdQWPpSZBuCLXMl5AYttGk5TUXWRxYdCseoJjrbuBZB92ZAnhEDIpLeZAkuNF3el0X6EYQMW2edUT1UfTvh4dR4OBeZCamdmHmTC3oPLbuF6oxvOP9VidRbtC1kneswZBboasgR9tTZCcAv0VJK7V9BUSKjMe8n6BSPEZD'
+  fbToken = 'EAAZAyAs3RUfkBACXqE8EsdT2IpTwZBP5UdQWPpSZBuCLXMl5AYttGk5TUXWRxYdCseoJjrbuBZB92ZAnhEDIpLeZAkuNF3el0X6EYQMW2edUT1UfTvh4dR4OBeZCamdmHmTC3oPLbuF6oxvOP9VidRbtC1kneswZBboasgR9tTZCcAv0VJK7V9BUSKjMe8n6BSPEZD'
 }) => new Promise((resolve, reject) => {
   oauth.getTmMemberId(tmToken).then(tmMemberId => {
-    facebook.getMusic(fbUserId, fbUserToken).then(artistNames => {
+    facebook.getMusic(fbUserId, fbToken).then(artistNames => {
       const vfPromise = firebase.getOngoingVerifiedFanOnsales(artistNames).catch(() => []);
       const discoPromise = discovery.getEvents(location, artistNames).catch(() => []);
       const ursaPromise = firebase.getSavedUrsaEvents(tmMemberId).catch(() => []);
