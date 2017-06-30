@@ -16,8 +16,6 @@ let data = {};
 
 const vfRef = db.ref("verified-fan/events");
 
-let data = {};
-
 // updates ongoing verified fan artists
 vfRef.on("value", function(snapshot) {
   data = snapshot.val();
@@ -31,7 +29,26 @@ const insertUserInteraction = (userId, data) => {
   return ref.child(key).set(data);
 }
 
+const getSavedUrsaEvents = tmUserId => new Promise((resolve, reject) => {
+  const ref = db.ref(`${namespace}/ursa/${tmUserId}`);
+  ref.on("value", function(snapshot) {
+    const val = snapshot.val();
+    const key = Object.keys(val)[0]
+    resolve(val[key]);
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+});
+
+const saveUrsaEvents = ({events, tmUserId}) => {
+  const ref = db.ref(`${namespace}/ursa/${tmUserId}`);
+  const key = ref.push().key;
+  return ref.child(key).set(events);
+}
+
 module.exports = {
   getOngoingVerifiedFanOnsales: () => data,
-  insertUserInteraction
+  insertUserInteraction,
+  getSavedUrsaEvents,
+  saveUrsaEvents
 };

@@ -14,11 +14,12 @@ module.exports.getPersonalizedEvents = ({
   location = '9q5cgpbtz',
   fbUserToken = 'EAAZAyAs3RUfkBAHojn3ZBNXdRmyOIcDWvX0ta5hrLWbKoXsWMzDRYrBx0s3Y4tUZBJDZBVSC32hywJPVYfns6NKrmVcTQjgnn6JQ2ZA6tSt4RE4S3XXgMKn38z61zAZATcuJr0YKKj9sVQMQG1iMLOLaQnNsyma1bE6MWEtZBelgoOckRQ9MvcZCdGBsBBeBj1IZD'
 }) => new Promise((resolve, reject) => {
+
   const discoPromise = facebook.getMusic(fbUserId, fbUserToken).then(artistNames => {
     return discovery.getEvents(location, artistNames)
   });
 
-  const ursaPromise = ursa.getRecommendations(tmUserId);
+  const ursaPromise = firebase.getSavedUrsaEvents(tmUserId);
 
   Promise.all([ discoPromise, ursaPromise ]).then(([discoEvents, ursaEvents]) => {
     const overlap = discoEvents.reduce((accum, cur) => {
@@ -28,6 +29,6 @@ module.exports.getPersonalizedEvents = ({
       return accum;
     }, []);
     resolve({ numDisco: discoEvents.length, numUrsa: ursaEvents.length, /*discoEvents, ursaEvents,*/ overlap });
-  })
+  });
 
 });
