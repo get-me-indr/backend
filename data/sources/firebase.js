@@ -12,15 +12,29 @@ admin.initializeApp({
 // Get a database reference to our posts
 const db = admin.database();
 
-let data = {};
+const getOngoingVerifiedFanOnsales = artistNames => new Promise((resolve, reject) => {
+  const vfRef = db.ref("verified-fan/events");
 
-const vfRef = db.ref("verified-fan/events");
+  // updates ongoing verified fan artists
+  vfRef.on("value", function(snapshot) {
+    const data = snapshot.val().reduce((accum, cur) => {
+      if (artistNames.find(name => name === cur['artist-name'])) {
+        accum.push({
+          eventName: cur['artist-name'],
+          imageUrl: cur.image,
+          eventUrl: cur.url,
+          eventId: cur.url,
+          artistId: cur.url
+        });
+      }
+      return accum;
+    }, []);
+    resolve(data);
 
-// updates ongoing verified fan artists
-vfRef.on("value", function(snapshot) {
-  data = snapshot.val();
-}, function (errorObject) {
-  console.log("The read failed: " + errorObject.code);
+
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
 });
 
 const insertUserInteraction = (userId, data) => {
@@ -47,7 +61,7 @@ const saveUrsaEvents = ({events, tmUserId}) => {
 }
 
 module.exports = {
-  getOngoingVerifiedFanOnsales: () => data,
+  getOngoingVerifiedFanOnsales,
   insertUserInteraction,
   getSavedUrsaEvents,
   saveUrsaEvents

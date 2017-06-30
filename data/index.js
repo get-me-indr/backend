@@ -8,27 +8,23 @@ const {
 const score = require('./score/score.js');
 
 module.exports.getPersonalizedEvents = ({
-  tmToken = 'd53f12c1454fd893aab8849093982b8846171abe' /* gabo's tmToken */,
+  tmToken = '2cb2cc003126fcca2f4b7eec962fd42e5d4afad9' /* gabo's tmToken */,
   tmUserId = '492196944',
   fbUserId = '10154599707336563' /* gabo's id */,
   location = '9q5cgpbtz',
-  fbUserToken = 'EAAZAyAs3RUfkBAHojn3ZBNXdRmyOIcDWvX0ta5hrLWbKoXsWMzDRYrBx0s3Y4tUZBJDZBVSC32hywJPVYfns6NKrmVcTQjgnn6JQ2ZA6tSt4RE4S3XXgMKn38z61zAZATcuJr0YKKj9sVQMQG1iMLOLaQnNsyma1bE6MWEtZBelgoOckRQ9MvcZCdGBsBBeBj1IZD'
+  fbUserToken = 'EAAZAyAs3RUfkBAFNLiIuBeNZAyYyBGvAhPtMJQXZBPQQlDMPVvvqqyElwA2s8O4NrFPLhBPtthpvG3zpapuc0oZAtoZCeZCIhXC1XQcISVOdjiZAdnAYDbzrOS6XgeCo1oacCuwGLZA8PwXvL0FI61nZANnxnkbSklwl4zNrgUFsFR6ZCrkZC9tn1YgJiAQqEgSricZD'
 }) => new Promise((resolve, reject) => {
+  oauth.getTmMemberId(tmToken).then(tmMemberId => {
+    facebook.getMusic(fbUserId, fbUserToken).then(artistNames => {
+      const vfPromise = firebase.getOngoingVerifiedFanOnsales(artistNames);
+      const discoPromise = facebook.getMusic(fbUserId, fbUserToken).then(artistNames => {
+        return discovery.getEvents(location, artistNames)
+      });
+      const ursaPromise = firebase.getSavedUrsaEvents(tmMemberId);
 
-  const discoPromise = facebook.getMusic(fbUserId, fbUserToken).then(artistNames => {
-    return discovery.getEvents(location, artistNames)
+      Promise.all([ vfPromise, ursaPromise, discoPromise ]).then(([ vfEvents, ursaEvents, discoEvents ]) => {
+        resolve({ vfEvents, ursaEvents, discoEvents });
+      });
+    });
   });
-
-  const ursaPromise = firebase.getSavedUrsaEvents(tmUserId);
-
-  Promise.all([ discoPromise, ursaPromise ]).then(([discoEvents, ursaEvents]) => {
-    const overlap = discoEvents.reduce((accum, cur) => {
-      if (ursaEvents.find(uEvent => uEvent.eventName === cur.eventName)) {
-        accum.push(cur.eventName);
-      }
-      return accum;
-    }, []);
-    resolve({ numDisco: discoEvents.length, numUrsa: ursaEvents.length, overlap, discoEvents, ursaEvents  });
-  });
-
 });
