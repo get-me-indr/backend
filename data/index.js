@@ -28,7 +28,7 @@ module.exports.getPersonalizedEvents = ({
       }
       return accum;
     }, []);
-    resolve({ numDisco: discoEvents.length, numUrsa: ursaEvents.length, /*discoEvents, ursaEvents,*/ overlap });
+    resolve({ numDisco: discoEvents.length, numUrsa: ursaEvents.length, overlap, discoEvents, ursaEvents  });
   });
 
 });
