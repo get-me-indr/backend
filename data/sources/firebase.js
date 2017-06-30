@@ -14,6 +14,17 @@ const db = admin.database();
 
 let data = {};
 
+const vfRef = db.ref("verified-fan/events");
+
+let data = {};
+
+// updates ongoing verified fan artists
+vfRef.on("value", function(snapshot) {
+  data = snapshot.val();
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
+
 const insertUserInteraction = (userId, data) => {
   const ref = db.ref(`${namespace}/interactions/${userId}`);
   const key = ref.push().key;

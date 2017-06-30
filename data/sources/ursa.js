@@ -2,7 +2,7 @@ require('isomorphic-fetch');
 
 module.exports = {
   getRecommendations: userId => {
-    return fetch(`http://ursa-qa.datasciences.tmcs/recommend?filter=default&max=50&dedupe=true&callerId=fgsci&type=personalized&marketId=27&userId=${userId}`)
+    return fetch(`http://ursa-qa.datasciences.tmcs/recommend?filter=default&max=200&dedupe=true&callerId=fgsci&type=personalized&marketId=27&userId=${userId}`)
       .then(res => res.json())
       .then(recommendations => {
         return events = recommendations['personalizedRecommendations']['artists']
