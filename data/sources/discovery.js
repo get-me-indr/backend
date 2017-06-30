@@ -70,18 +70,18 @@ module.exports = {
              }
 
          }
-        //  if(eventList.length < minReturnedObjects){
-        //      for(let evt of events._embedded.events){
-        //         if(!usedArtist.includes(evt.name.toLowerCase())){
-        //         usedArtist.push(evt.name.toLowerCase());
-        //         let eventInfo = createEventResponse(evt);
-        //         eventList.push(eventInfo)
-        //         }
-        //         if(eventList.length >= minReturnedObjects){
-        //         break;
-        //         }
-        //      }
-        //  }
+         if(eventList.length < minReturnedObjects){
+             for(let evt of events._embedded.events){
+                if(!usedArtist.includes(evt.name.toLowerCase())){
+                usedArtist.push(evt.name.toLowerCase());
+                let eventInfo = createEventResponse(evt);
+                eventList.push(eventInfo)
+                }
+                if(eventList.length >= minReturnedObjects){
+                break;
+                }
+             }
+         }
          // console.log(eventList);
          return eventList;
      });
