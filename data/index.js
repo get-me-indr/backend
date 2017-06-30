@@ -5,7 +5,6 @@ const {
   oauth,
   firebase
 } = require('./sources');
-const score = require('./score/score.js');
 
 module.exports.getPersonalizedEvents = ({
   tmToken = 'd53f12c1454fd893aab8849093982b8846171abe' /* gabo's tmToken */,
