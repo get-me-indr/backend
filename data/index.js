@@ -21,7 +21,7 @@ module.exports.getPersonalizedEvents = ({
       const ursaPromise = firebase.getSavedUrsaEvents(tmMemberId).catch(() => []);
 
       Promise.all([ vfPromise, ursaPromise, discoPromise ]).then(([ vfEvents, ursaEvents, discoEvents ]) => {
-        return score({ test: 'test', ursaEvents, discoEvents }).then(resolve).catch(err => resolve(err));
+        return score({ ursaEvents, discoEvents }).then(events => resolve({ events, test: true })).catch(err => resolve(err));
         // resolve({ vfEvents, ursaEvents, discoEvents });
       });
     }).catch(() => resolve([]));
