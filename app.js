@@ -3,6 +3,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const { getPersonalizedEvents } = require('./data');
 
+const discovery = require('./data/sources/discovery');
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -18,6 +20,18 @@ app.get('/', (req, res) => {
       return res.json({ error });
     });
 });
+
+app.get('/discovery', (req, res) => {
+  let artistList = req.query.artists.split(',');
+  discovery.getEvents(req.query.geoPoint, artistList)
+    .then(events => {
+      return res.json({ events });
+    })
+    .catch(error => {
+      return res.json({ error });
+    });
+});
+
 
 
 module.exports = app;
